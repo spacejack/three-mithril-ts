@@ -1,0 +1,62 @@
+{
+  "defaultSeverity": "warning",
+  "rules": {
+    "class-name": true,
+    "comment-format": [false, "check-space"],
+    "expect": true,
+    "export-just-namespace": true,
+    "forin": true,
+    "indent": [true, 1],
+    "jsdoc-format": false,
+    "max-line-length": [false],
+    "no-dead-reference": true,
+    "no-padding": true,
+    "no-public": true,
+    "no-reference-import": true,
+    "no-relative-import-in-test": true,
+    "no-redundant-modifiers": true,
+    "no-single-declare-module": true,
+		"no-useless-files": true,
+    "no-var": true,
+    "no-var-keyword": true,
+    "no-empty": false,
+    "no-namespace": false,
+    "no-shadowed-variable": false,
+    "no-string-literal": false,
+    "no-unused-expression": false,
+    "no-unused-new": true,
+    "no-duplicate-variable": true,
+    "no-eval": true,
+    "no-internal-module": false,
+    "no-trailing-whitespace": true,
+    "no-unused-variable": [true],
+    "object-literal-key-quotes": [true, "as-needed"],
+    "one-line": [true, "check-open-brace", "check-whitespace"],
+    "prefer-declare-function": true,
+    "prefer-method-signature": true,
+    "quotemark": [false, "double"],
+    "semicolon": [true, "never"],
+    "trim-file": true,
+    "triple-equals": [true, "allow-null-check"],
+    "typedef-whitespace": [
+      false,
+      {
+        "call-signature": "nospace",
+        "index-signature": "nospace",
+        "parameter": "nospace",
+        "property-declaration": "nospace",
+        "variable-declaration": "nospace"
+      }
+    ],
+    "unified-signatures": false,
+    "variable-name": [true, "ban-keywords"],
+    "void-return": true,
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-type"
+    ]
+  }
+}

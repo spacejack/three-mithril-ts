@@ -1,0 +1,102 @@
+html {
+	height: 100%;
+}
+
+body {
+	font-family: Helvetica,Arial,sans-serif;
+	font-size: 15px;
+	height: 100%;
+	color: #CCC;
+	background-color: #333;
+	overflow: hidden;
+}
+
+a {
+	color: #9BC;
+}
+a:hover,a:active {
+	color: #9DF;
+}
+
+input[type='text'],input[type='email'],input[type='number'],textarea {
+	font: inherit;
+	color: #CCC;
+	border: #555 1px solid;
+	border-radius: 0.125em;
+	background: transparent;
+	padding: 0.5em;
+}
+input[type='text']:focus,input[type='email']:focus,input[type='number']:focus,textarea:focus {
+	border: #AAA 1px solid;
+	outline: none;
+	background: rgba(0,0,0,0.25);
+}
+input[type='text']:disabled,input[type='email']:disabled,input[type='number']:disabled,textarea:disabled {
+	cursor: default;
+	opacity: 0.5;
+}
+
+button,select {
+	font: inherit;
+	color: #CCC;
+	border: #888 1px solid;
+	border-radius: 0.125em;
+	cursor: pointer;
+}
+button {
+	background-color: transparent;
+	padding: 0.5em 1em;
+}
+button:hover {
+	border-color: #CCC;
+	background-color: rgba(0,0,0,0.25);
+}
+button:active {
+	color: #EEE;
+	border-color: #CCC;
+	background-color: rgba(0,0,0,0.5);
+}
+button:focus {
+	border: #AAA 1px solid;
+	outline: none;
+}
+/* firefox specialness */
+button::-moz-focus-inner {
+	border: 0;
+	padding: 0;
+}
+button:disabled {
+	cursor: default;
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+select {
+	padding: 0.46em 0.5em;
+	background: #333;
+}
+select:focus {
+	color: #EEE;
+	border-color: #CCC;
+	outline: none;
+}
+select:disabled {
+	cursor: default;
+	opacity: 0.5;
+	pointer-events: none;
+}
+select option {
+	background: #333;
+}
+
+hr {
+    border: none;
+    height: 1px;
+	background-color: #888;
+	margin: 0;
+	padding: 0;
+}
+
+nav ul {
+	list-style: none;
+}

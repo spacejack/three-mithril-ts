@@ -1,0 +1,13 @@
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+
+[{*.ts,*.js,*.css,*.pcss,*.html,*.md}]
+indent_style = tab
+
+[{package.json,.eslintrc,.stylelintrc,tsconfig.json,jsconfig.json,typings.json,CC.Spark.K2.nuspec}]
+indent_style = space
+indent_size = 2

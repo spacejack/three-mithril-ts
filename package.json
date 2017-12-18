@@ -1,0 +1,57 @@
+{
+  "name": "three-mithril-ts",
+  "version": "0.1.0",
+  "description": "THREE.js, Mithril.js, TypeScript starter project",
+  "scripts": {
+    "compile:ts": "browserify --debug src/ts/main.ts -p [ tsify --project src/ts/tsconfig.json ] -x=pojod -x=mithril -x=mithril/stream -x=three -o public/js/app.js",
+    "compile:vendor": "browserify --debug -r pojod -r mithril -r mithril/stream -r three -o public/js/vendor.js",
+    "compile:pcss": "postcss src/pcss/index.pcss -o public/css/app.css",
+    "watch:pcss": "postcss src/pcss/index.pcss --watch -o public/css/app.css",
+    "build:ts": "browserify src/ts/main.ts -p [ tsify --project src/ts/tsconfig.json ] -x=pojod -x=mithril -x=mithril/stream -x=three | uglifyjs -cm -o public/js/app.js",
+    "build:vendor": "browserify -r pojod -r mithril -r mithril/stream -r three | uglifyjs -cm -o public/js/vendor.js",
+    "build:pcss": "postcss src/pcss/index.pcss --env production -o public/css/app.css",
+    "clean:ts": "rm -f public/js/app.js",
+    "clean:vendor": "rm -f public/js/vendor.js",
+    "clean:pcss": "rm -f public/css/app.css",
+    "compile": "run-s compile:*",
+    "build": "run-s build:*",
+    "clean": "run-s clean:*",
+    "serve": "budo src/ts/main.ts:js/app.js -p 3000 --dir public --live=*.{html,css} -- --debug -p [ browserify-hmr ] -p [ tsify --project src/ts/tsconfig.json ] -x=pojod -x=mithril -x=mithril/stream -x=three",
+    "start": "run-p compile:vendor watch:* serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spacejack/three-mithril-ts.git"
+  },
+  "keywords": [
+    "gamedev",
+    "mithril",
+    "javascript",
+    "typescript"
+  ],
+  "author": "spacejack",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/mithril": "^1.1.12",
+    "@types/three": "^0.84.35",
+    "autoprefixer": "^7.2.3",
+    "browserify": "^14.5.0",
+    "browserify-hmr": "^0.3.6",
+    "budo": "^10.0.4",
+    "npm-run-all": "^4.1.2",
+    "postcss-clean": "^1.1.0",
+    "postcss-cli": "^4.1.1",
+    "postcss-custom-properties": "^6.2.0",
+    "postcss-import": "^11.0.0",
+    "postcss-nesting": "^4.2.1",
+    "tsify": "^3.0.4",
+    "tslint": "^4.5.1",
+    "typescript": "^2.6.2",
+    "uglify-js": "^3.2.2"
+  },
+  "dependencies": {
+    "mithril": "^1.1.6",
+    "pojod": "^0.6.2",
+    "three": "^0.88.0"
+  }
+}
