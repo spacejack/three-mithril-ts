@@ -47,27 +47,28 @@
 		display: flex;
 		justify-content: flex-end;
 
-		& .fullscreen {
-			& button {
-				width: 1.5em;
-				height: 1.5em;
-				padding: 0;
-				border: none;
-				background: transparent;
+		/* & .fullscreen { */
+		& button {
+			width: 1.5em;
+			height: 1.5em;
+			padding: 0;
+			border: none;
+			background: transparent;
+			margin-left: 1em;
 
+			& svg {
+				fill: #CCC;
+			}
+
+			&:hover, &:active {
 				& svg {
-					fill: #CCC;
-				}
-
-				&:hover, &:active {
-					& svg {
-						fill: #EEE;
-					}
-				}
-				&:active {
-					background-color: rgba(0,0,0,0.75);
+					fill: #EEE;
 				}
 			}
+			&:active {
+				background-color: rgba(0,0,0,0.75);
+			}
 		}
+		/*}*/
 	}
 }

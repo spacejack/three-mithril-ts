@@ -1,5 +1,29 @@
 import * as m from 'mithril'
 
+export function widescreenOn() {
+	return m('svg',
+		{
+			xmlns: "http://www.w3.org/2000/svg",
+			viewBox: "0 0 67.733 67.733"
+		},
+		m('path', {
+			d: "M0 12.7v42.333h67.733V12.7zm8.467 8.467h50.8v25.4h-50.8z"
+		})
+	)
+}
+
+export function widescreenOff() {
+	return m('svg',
+		{
+			xmlns: "http://www.w3.org/2000/svg",
+			viewBox: "0 0 67.733 67.733"
+		},
+		m('path', {
+			d: "M8.467 16.933V50.8h50.8V16.933zm8.466 8.467H50.8v16.933H16.933z"
+		})
+	)
+}
+
 export function fullscreenOn() {
 	return m('svg',
 		{
