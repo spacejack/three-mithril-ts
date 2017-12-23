@@ -39,25 +39,28 @@ export default (): m.Component => {
 	}
 
 	function resize() {
-		if (!container || !canvas || !game) return
+		if (!canvas) return
 		const {width, height} = canvas.getBoundingClientRect()
 		// Recompute pixels-per-em
 		fontSize(DEFAULT_FONT_SIZE * height / DEFAULT_HEIGHT)
-		// Must resize 3D renderer
-		game.resize(width, height)
+		if (game) {
+			// Must resize 3D renderer
+			game.resize(width, height)
+		}
 		m.redraw()
 	}
 
 	// Return component hooks
 	return {
 		oncreate ({dom}) {
+			container = dom as HTMLElement
+			canvas = container.querySelector('canvas.app-canvas') as HTMLCanvasElement
+			window.addEventListener('resize', resize)
+			resize()
 			promise.then(assets => {
 				// Loaded. Show 100% progress bar for a moment before continuing.
 				setTimeout(() => {
-					container = dom as HTMLElement
-					canvas = container.querySelector('canvas.app-canvas') as HTMLCanvasElement
-					game = createGame(canvas, assets)
-					window.addEventListener('resize', resize)
+					game = createGame(canvas!, assets)
 					resize()
 				}, 100)
 			}).catch(err => {
