@@ -2,7 +2,7 @@ import * as m from 'mithril'
 import {Stream} from 'mithril/stream'
 import {formatTime} from '../lib/string'
 import * as fullscreen from '../lib/fullscreen'
-import {isWidescreen} from '../state'
+//import {isWidescreen} from '../state'
 import observer from './observer'
 import * as svgs from './svgs'
 
@@ -34,7 +34,7 @@ export default {
 				})
 			),
 			m('.control-block',
-				!fullscreen.is() && m('.widescreen',
+				/* !fullscreen.is() && m('.widescreen',
 					m('button',
 						{
 							type: 'button',
@@ -45,7 +45,7 @@ export default {
 						isWidescreen() ?
 							svgs.widescreenOff() : svgs.widescreenOn()
 					)
-				),
+				), */
 				m('.fullscreen',
 					m('button',
 						{

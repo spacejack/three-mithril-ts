@@ -12,8 +12,9 @@ export interface Attrs {
 export default {
 	view ({attrs: {progress, ready, error, onStart}}) {
 		return m('.title-block',
-			m('h1', 'three.js starter project'),
-			m('p', 'Use arrow keys or WASD to move.'),
+			m('h1', 'Monkey Hunt'),
+			m('p', 'Use arrow keys or WASD to move'),
+			m('p', 'Space, control or shift to fire.'),
 			ready
 				// Show start button when loaded
 				? m('.start-block',
