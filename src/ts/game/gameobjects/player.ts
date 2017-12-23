@@ -37,7 +37,7 @@ export default class Player extends GameObject {
 
 	constructor (visual: Object3D, pos: Vector3, rot: Euler, actions: PlayerActions) {
 		super(visual, pos, rot)
-		this.collider = new Collider(Collider.SPHERE, 1.25)
+		this.collider = new Collider(Collider.SPHERE, 1.5)
 		this.inputs = createPlayerInputs()
 		this.actions = actions
 		this.fireT = 0
