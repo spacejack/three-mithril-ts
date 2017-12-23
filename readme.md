@@ -2,7 +2,7 @@
 
 This is a somewhat opinionated, but hopefully open-ended starter project for web apps that have some combination of a canvas-based 3D scene and a DOM-based UI.
 
-[Online Demo](https://spacejack.github.io/three-mithril-ts/)
+### [Online Demo](https://spacejack.github.io/three-mithril-ts/)
 
 It leans heavily on **[three.js](https://threejs.org/)** for 3D graphics and **[Mithril.js](https://mithril.js.org/)** for a GUI framework and streams library.
 
