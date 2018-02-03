@@ -18,7 +18,7 @@ Game architecture itself isn't really the focus here, but a servicable object-or
 
 * TSLint
 * stylelint
-* postcss-sugarss-language
+* language-postcss
 * EditorConfig
 
 ## Compile-on-save ts and css files with source maps, start localhost server

@@ -1,9 +1,9 @@
 // DOM utils
 
 /** The transform style prefix used by this browser (if any) */
-export const transformStylePrefix = (function(){
-	function getAttrLc (el: Element, attr: string) {
-		const s = el.getAttribute(attr)
+export const transformStylePrefix = (function() {
+	function getAttrLc (e: Element, attr: string) {
+		const s = e.getAttribute(attr)
 		return (!!s && typeof s === 'string') ? s.toLowerCase() : ''
 	}
 	const t = 'translate3d(100px,20px,0px)' // the transform we'll use to test

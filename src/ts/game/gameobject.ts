@@ -28,38 +28,6 @@ export default class GameObject {
 		this.isAlive = true
 	}
 
-	/**
-	 * @param dt Delta time (milliseconds) elapsed since last update
-	 * @returns true if still alive, false if dead
-	 */
-	update (dt: number): boolean {
-		if (!this.isAlive) return false
-		this.lifeT += dt
-		return true
-	}
-
-	/**
-	 * Since we have a retained-mode scene managed by three.js, all our render
-	 * method does is copy gameobject state to its visual representation.
-	 */
-	render(): void {
-		if (!this.visual) return
-		this.visual.position.copy(this.position)
-		this.visual.rotation.copy(this.rotation)
-	}
-
-	/** End this object's life */
-	snuff(): void {
-		if (!this.isAlive) return
-		this.isAlive = false
-	}
-
-	/** Violently end this object's life */
-	kill(): void {
-		if (!this.isAlive) return
-		this.snuff()
-	}
-
 	/** Update a list of game objects */
 	static updateList (
 		objs: GameObject[], dt: number, onRemove?: (obj: GameObject, i: number) => void
@@ -121,5 +89,37 @@ export default class GameObject {
 			}
 		}
 		return hits
+	}
+
+	/**
+	 * @param dt Delta time (milliseconds) elapsed since last update
+	 * @returns true if still alive, false if dead
+	 */
+	update (dt: number): boolean {
+		if (!this.isAlive) return false
+		this.lifeT += dt
+		return true
+	}
+
+	/**
+	 * Since we have a retained-mode scene managed by three.js, all our render
+	 * method does is copy gameobject state to its visual representation.
+	 */
+	render(): void {
+		if (!this.visual) return
+		this.visual.position.copy(this.position)
+		this.visual.rotation.copy(this.rotation)
+	}
+
+	/** End this object's life */
+	snuff(): void {
+		if (!this.isAlive) return
+		this.isAlive = false
+	}
+
+	/** Violently end this object's life */
+	kill(): void {
+		if (!this.isAlive) return
+		this.snuff()
 	}
 }

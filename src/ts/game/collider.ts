@@ -40,10 +40,10 @@ export default class Collider {
 }
 
 function distToAABB (pt: Vector3, aabbPos: Vector3, aabbSize: Vector3) {
-    const sqDist = axisDistSq(pt.x, aabbPos.x - aabbSize.x / 2, aabbPos.x + aabbSize.x / 2)
+	const sqDist = axisDistSq(pt.x, aabbPos.x - aabbSize.x / 2, aabbPos.x + aabbSize.x / 2)
 		+ axisDistSq(pt.y, aabbPos.y - aabbSize.y / 2, aabbPos.y + aabbSize.y / 2)
 		+ axisDistSq(pt.z, aabbPos.z - aabbSize.z / 2, aabbPos.z + aabbSize.z / 2)
-    return Math.sqrt(sqDist)
+	return Math.sqrt(sqDist)
 }
 
 function axisDistSq (a: number, min: number, max: number): number {

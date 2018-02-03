@@ -2,10 +2,10 @@
 
 declare global {
 	interface Document {
-		mozCancelFullScreen?(): void
-		msExitFullscreen?(): void
 		mozFullScreenElement?: Element
 		msFullscreenElement?: Element
+		mozCancelFullScreen?(): void
+		msExitFullscreen?(): void
 		msRequestFullscreen?(): void
 		mozRequestFullScreen?(): void
 		//mozFullscreenEnabled?: boolean

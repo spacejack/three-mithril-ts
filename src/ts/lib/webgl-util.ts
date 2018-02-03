@@ -5,8 +5,7 @@ export function detectWebGL() {
 		const canvas = document.createElement('canvas')
 		return !!canvas.getContext('webgl')
 			|| !!canvas.getContext('experimental-webgl')
-	}
-	catch (e) {
+	} catch (e) {
 		return null
 	}
 }

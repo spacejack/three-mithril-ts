@@ -20,18 +20,18 @@ const MAX_STEP = 100
 
 /** Game public interface */
 export interface Game {
-	/** Start the game and render loop */
-	run(): void
-	/** Call when canvas resized */
-	resize(width: number, height: number): void
-	/** Call to cleanup resources */
-	destroy(): void
 	/** Current score */
 	score: Stream<number>
 	/** Current level */
 	level: Stream<number>
 	/** Current level time */
 	time: Stream<number>
+	/** Start the game and render loop */
+	run(): void
+	/** Call when canvas resized */
+	resize(width: number, height: number): void
+	/** Call to cleanup resources */
+	destroy(): void
 }
 
 /**

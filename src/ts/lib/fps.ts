@@ -27,7 +27,7 @@ export default function createFPSMonitor (num = 16): FPSMonitor {
 		index = (index + 1) % num
 		f = 1000 * num / sum
 		return f
-	};
+	}
 
 	/** @return current fps string formatted to 1 decimal place */
 	function fps() {

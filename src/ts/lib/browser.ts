@@ -8,7 +8,7 @@ declare global {
 }
 
 /** Determine if launched from homescreen/desktop app launcher */
-export const isStandalone = (function(){
+export const isStandalone = (function() {
 	// iOS
 	if (navigator.standalone !== undefined)
 		return !!navigator.standalone
@@ -25,7 +25,7 @@ const ua = navigator.userAgent
 export const isSafari = /^((?!chrome|android).)*safari/i.test(ua)
 
 /** Boolean flags indicating what type of mobile browser */
-export const isMobile = (function(){
+export const isMobile = (function() {
 	const a = /Android/i.test(ua)
 	const bb = /BlackBerry/i.test(ua)
 	const ios = /iPhone|iPad|iPod/i.test(ua)
