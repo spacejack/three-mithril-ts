@@ -1,4 +1,4 @@
-import * as m from 'mithril'
+import m from 'mithril'
 import {Stream} from 'mithril/stream'
 import observer from './observer'
 

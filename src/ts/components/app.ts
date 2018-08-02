@@ -1,4 +1,4 @@
-import * as m from 'mithril'
+import m from 'mithril'
 import {DEFAULT_HEIGHT, DEFAULT_FONT_SIZE} from '../config'
 import {fontSize} from '../state'
 import {loadAssets} from '../lib/loader'

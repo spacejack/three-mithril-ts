@@ -1,7 +1,7 @@
 // Loader that provides a dictionary of named assets
 
-import * as m from 'mithril'
-import * as stream from 'mithril/stream'
+import m from 'mithril'
+import stream from 'mithril/stream'
 import {Stream} from 'mithril/stream'
 import {BufferGeometry, Texture, BufferGeometryLoader, TextureLoader} from 'three'
 import D from 'pojod'
@@ -67,9 +67,9 @@ export function loadAssets (assetList: AssetList): LoadResult {
 
 	let totalLoaded = 0
 
-	const promises = keys.reduce((promises, k) => {
-		if (!assetList[k]) return promises
-		return promises.concat(
+	const promises = keys.reduce((ps, k) => {
+		if (!assetList[k]) return ps
+		return ps.concat(
 			assetList[k]!.map(
 				ad => loadFns[k](ad.url).then(resource => {
 					assets[k][ad.name] = resource

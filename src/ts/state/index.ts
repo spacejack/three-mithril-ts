@@ -1,6 +1,6 @@
 // Shared global app states
 
-import * as stream from 'mithril/stream'
+import stream from 'mithril/stream'
 import {DEFAULT_FONT_SIZE} from '../config'
 
 /** Dynamic font size for game UI matches container size */

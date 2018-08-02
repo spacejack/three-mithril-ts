@@ -1,4 +1,4 @@
-import * as m from 'mithril'
+import m from 'mithril'
 import app from './components/app'
 
 // Mount the root app component

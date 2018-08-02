@@ -42,12 +42,12 @@ export function dot (x0: number, y0: number, x1: number, y1: number) : number {
  * Linear interplation from x to y.
  * a must be from 0.0 to 1.0
  */
-export function lerp (x: number, y: number, a: number) : number {
+export function lerp (x: number, y: number, a: number): number {
 	const b = 1.0 - a
 	return (x * b + y * a)
 }
 
-export function lerpAngle (x: number, y: number, a: number) : number {
+export function lerpAngle (x: number, y: number, a: number): number {
 	const d = difAngle(x, y)
 	return pmod(x + d * a, PI2)
 }
@@ -56,7 +56,7 @@ export function lerpAngle (x: number, y: number, a: number) : number {
  * Trigonometric interpolation from x to y (smoothed at endpoints.)
  * a must be from 0.0 to 1.0
  */
-export function terp (x: number, y: number, a: number) : number {
+export function terp (x: number, y: number, a: number): number {
 	const r = Math.PI * a
 	const s = (1.0 - Math.cos(r)) * 0.5
 	const t = 1.0 - s
@@ -70,7 +70,7 @@ export function terp (x: number, y: number, a: number) : number {
  * @param a Amount (0-1)
  * @param e Exponent
  */
-export function xerp (x: number, y: number, a: number, e: number) : number {
+export function xerp (x: number, y: number, a: number, e: number): number {
 	let s: number
 	if (a < 0.5) {
 		s = Math.pow(a * 2.0, e) / 2.0

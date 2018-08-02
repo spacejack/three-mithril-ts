@@ -1,5 +1,4 @@
-import * as stream from 'mithril/stream'
-import {Stream} from 'mithril/stream'
+import stream, {Stream} from 'mithril/stream'
 import {Vector3, Euler} from 'three'
 import {
 	PLAYER_START_POS, PLAYER_START_ROT, GRID_SIZE,
