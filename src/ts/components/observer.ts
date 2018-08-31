@@ -16,7 +16,7 @@ export interface State {
  * This is a wrapper component that is optimized to only
  * re-render its child vdom on stream updates.
  */
-export default {
+const Observer: m.Comp<Attrs<any>, State> = {
 	value: undefined as any,
 
 	oncreate ({dom, attrs: {render, selector, value}}) {
@@ -40,7 +40,9 @@ export default {
 	view (vnode) {
 		return vnode.attrs.view(vnode)
 	}
-} as m.Comp<Attrs<any>, State>
+}
+
+export default Observer
 
 /*
 Flems example:

@@ -18,7 +18,7 @@ import Spark from './gameobjects/spark'
 const MAX_STEP = 100
 
 /** Game public interface */
-export interface Game {
+interface Game {
 	/** Current score */
 	score: Stream<number>
 	/** Current level */
@@ -39,7 +39,7 @@ export interface Game {
  * There is only one instance so class prototype optimizations and
  * inheritance/polymorphism aren't really needed.
  */
-export default function createGame (canvas: HTMLCanvasElement, assets: Assets): Game {
+function Game (canvas: HTMLCanvasElement, assets: Assets): Game {
 	const scene = createScene(canvas, assets, {antialias: true})
 	const score = stream(0)
 	const time = stream(0)
@@ -264,3 +264,5 @@ export default function createGame (canvas: HTMLCanvasElement, assets: Assets): 
 
 	return {run, resize, destroy, score, time, level}
 }
+
+export default Game

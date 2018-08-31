@@ -1,6 +1,6 @@
 import m from 'mithril'
 import {Stream} from 'mithril/stream'
-import loadingBar from './loading-bar'
+import LoadingBar from './loading-bar'
 
 export interface Attrs {
 	progress: Stream<number>
@@ -9,7 +9,7 @@ export interface Attrs {
 	onStart(): void
 }
 
-export default {
+const TitleBlock: m.Component<Attrs> = {
 	view ({attrs: {progress, ready, error, onStart}}) {
 		return m('.title-block',
 			m('h1', 'Monkey Hunt'),
@@ -27,9 +27,11 @@ export default {
 				: m('.loading',
 					m('.message', error ? error.message : 'Loading'),
 					m('div',
-						m(loadingBar, {progress})
+						m(LoadingBar, {progress})
 					)
 				)
 			)
 	}
-} as m.Component<Attrs>
+}
+
+export default TitleBlock

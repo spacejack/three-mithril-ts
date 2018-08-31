@@ -1,17 +1,17 @@
 import m from 'mithril'
 import {Stream} from 'mithril/stream'
-import observer from './observer'
+import Observer from './observer'
 
 export interface Attrs {
 	/** Progress value from 0..1 */
 	progress: Stream<number>
 }
 
-export default {
+const LoadingBar: m.Component<Attrs> = {
 	view ({attrs: {progress}}) {
 		// Uses the observer component to handle stream management
 		// and granular vdom re-rendering.
-		return m(observer, {
+		return m(Observer, {
 			value: progress,
 			render: (progress: number) => m('.bar', {
 				style: `width: ${progress * 100}%`
@@ -19,4 +19,6 @@ export default {
 			view: () => m('.bar-outer')
 		})
 	}
-} as m.Component<Attrs>
+}
+
+export default LoadingBar

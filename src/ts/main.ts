@@ -1,5 +1,5 @@
 import m from 'mithril'
-import app from './components/app'
+import App from './components/app'
 
 // Mount the root app component
-m.mount(document.querySelector('.game-container')!, app)
+m.mount(document.querySelector('.game-container')!, App)

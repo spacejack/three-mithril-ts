@@ -2,15 +2,15 @@ import m from 'mithril'
 import {DEFAULT_HEIGHT, DEFAULT_FONT_SIZE} from '../config'
 import {fontSize} from '../state'
 import {loadAssets} from '../lib/loader'
-import createGame, {Game} from '../game'
-import titleBlock from './title-block'
-import hud from './hud'
+import Game from '../game'
+import TitleBlock from './title-block'
+import Hud from './hud'
 
 /**
  * Root application component.
  * This component renders the DOM and initializes the game engine.
  */
-export default (): m.Component => {
+export default function App(): m.Component {
 	// This is a FactoryComponent - state is maintaned within a closure.
 	// Executes when component instance is instantiated.
 
@@ -60,7 +60,7 @@ export default (): m.Component => {
 			promise.then(assets => {
 				// Loaded. Show 100% progress bar for a moment before continuing.
 				setTimeout(() => {
-					game = createGame(canvas!, assets)
+					game = Game(canvas!, assets)
 					resize()
 				}, 100)
 			}).catch(err => {
@@ -86,14 +86,14 @@ export default (): m.Component => {
 					{style: 'font-size: ' + fontSize() + 'px'},
 					!started
 						// Show title block until user clicks start
-						? m(titleBlock, {
+						? m(TitleBlock, {
 							progress,
 							ready: !!game,
 							error: loadError,
 							onStart: start
 						})
 						// Show game & HUD when started
-						: !!game && m(hud, {
+						: !!game && m(Hud, {
 							score: game.score,
 							time: game.time,
 							level: game.level

@@ -1,4 +1,4 @@
-export interface FPSMonitor {
+interface FPSMonitor {
 	update(dt: number): number
 	fps(): string
 }
@@ -6,7 +6,7 @@ export interface FPSMonitor {
 /**
  * Create instance of Frames Per Second Monitor
  */
-export default function createFPSMonitor (num = 16): FPSMonitor {
+function FPSMonitor (num = 16): FPSMonitor {
 	const ticks = new Array<number>(num)
 	let sum = 0
 	let index = 0
@@ -36,3 +36,5 @@ export default function createFPSMonitor (num = 16): FPSMonitor {
 
 	return {update, fps}
 }
+
+export default FPSMonitor

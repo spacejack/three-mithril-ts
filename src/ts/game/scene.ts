@@ -78,7 +78,7 @@ class SceneWebGL implements Scene {
 
 		// Make transparent so it isn't rendered as black for 1 frame at startup
 		this.renderer = new WebGLRenderer({
-			canvas: canvas, antialias: !!opts.antialias,
+			canvas, antialias: !!opts.antialias,
 			clearColor: FOG_COLOR.getHex(), alpha: true, clearAlpha: 1
 		})
 		if (!this.renderer) {

@@ -3,7 +3,7 @@ import {Stream} from 'mithril/stream'
 import {formatTime} from '../lib/string'
 import * as fullscreen from '../lib/fullscreen'
 //import {isWidescreen} from '../state'
-import observer from './observer'
+import Observer from './observer'
 import * as svgs from './svgs'
 
 export interface Attrs {
@@ -12,22 +12,22 @@ export interface Attrs {
 	level: Stream<number>
 }
 
-export default {
+const Hud: m.Component<Attrs> = {
 	view ({attrs: {score, time, level}}) {
 		return m('.hud',
 			m('.score-block',
 				// Use 'observer' components for frequently-updating values
-				m(observer, {
+				m(Observer, {
 					value: score,
 					render: (s: number) => String(s),
 					view: () => m('.score')
 				}),
-				m(observer, {
+				m(Observer, {
 					value: time,
 					render: (t: number) => formatTime(t),
 					view: () => m('.time')
 				}),
-				m(observer, {
+				m(Observer, {
 					value: level,
 					render: (l: number) => String(l),
 					view: () => m('.level')
@@ -63,4 +63,6 @@ export default {
 			)
 		)
 	}
-} as m.Component<Attrs>
+}
+
+export default Hud
