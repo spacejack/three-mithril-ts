@@ -2,25 +2,25 @@
 
 declare global {
 	interface Document {
+		fullscreenElement?: Element
 		mozFullScreenElement?: Element
 		msFullscreenElement?: Element
+		webkitFullscreenElement?: Element
 		mozCancelFullScreen?(): void
 		msExitFullscreen?(): void
+		webkitExitFullscreen?(): void
 		msRequestFullscreen?(): void
 		mozRequestFullScreen?(): void
-		//mozFullscreenEnabled?: boolean
 	}
 	interface Element {
 		msRequestFullscreen?(): void
 		mozRequestFullScreen?(): void
+		webkitRequestFullscreen?(): void
 	}
 }
 
 export function toggle(el: HTMLElement) {
 	if (!is()) {
-		/*if (document.mozFullscreenEnabled === false) {
-			console.warn("Fullscreen may not be available")
-		}*/
 		if (el.requestFullscreen) {
 			el.requestFullscreen()
 		} else if (el.msRequestFullscreen) {

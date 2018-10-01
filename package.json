@@ -1,6 +1,6 @@
 {
   "name": "three-mithril-ts",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "THREE.js, Mithril.js, TypeScript starter project",
   "scripts": {
     "compile:ts": "browserify --debug src/ts/main.ts -p [ tsify --project src/ts/tsconfig.json ] -x=pojod -x=mithril -x=mithril/stream -x=three -o public/js/app.js",
@@ -33,26 +33,26 @@
   "license": "ISC",
   "devDependencies": {
     "@types/mithril": "^1.1.12",
-    "@types/three": "^0.92.18",
-    "autoprefixer": "^9.1.3",
-    "browserify": "^16.2.2",
+    "@types/three": "^0.92.23",
+    "autoprefixer": "^9.1.5",
+    "browserify": "^16.2.3",
     "browserify-hmr": "^0.3.6",
     "budo": "^11.3.2",
     "npm-run-all": "^4.1.3",
     "postcss-clean": "^1.1.0",
     "postcss-cli": "^6.0.0",
-    "postcss-custom-properties": "^7.0.0",
+    "postcss-custom-properties": "^8.0.6",
     "postcss-import": "^12.0.0",
-    "postcss-nesting": "^6.0.0",
+    "postcss-nesting": "^7.0.0",
     "stylelint-config-recommended": "^2.1.0",
     "tsify": "^4.0.0",
     "tslint": "^5.11.0",
-    "typescript": "^2.9.2",
-    "uglify-js": "^3.4.8"
+    "typescript": "^3.1.1",
+    "uglify-js": "^3.4.9"
   },
   "dependencies": {
     "mithril": "^1.1.6",
     "pojod": "^0.6.2",
-    "three": "^0.95.0"
+    "three": "^0.97.0"
   }
 }
