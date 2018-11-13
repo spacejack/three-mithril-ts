@@ -1,6 +1,6 @@
 {
   "name": "three-mithril-ts",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "THREE.js, Mithril.js, TypeScript starter project",
   "scripts": {
     "compile:ts": "browserify --debug src/ts/main.ts -p [ tsify --project src/ts/tsconfig.json ] -x=pojod -x=mithril -x=mithril/stream -x=three -o public/js/app.js",

@@ -1,6 +1,6 @@
-import {Vector3, Euler, Object3D} from 'three'
-import Collider from '../collider'
-import GameObject from '../gameobject'
+import * as THREE from 'three'
+import Collider from '../Collider'
+import GameObject from '../GameObject'
 
 const ROT_VEL = Math.PI / 2.0
 const FWD_VEL = 8.0
@@ -26,7 +26,7 @@ export function createPlayerInputs(): PlayerInputs {
 }
 
 export interface PlayerActions {
-	shoot(position: Vector3, rotation: Euler): void
+	shoot(position: THREE.Vector3, rotation: THREE.Euler): void
 }
 
 export default class Player extends GameObject {
@@ -35,7 +35,7 @@ export default class Player extends GameObject {
 	/* Remaining shot cooldown time */
 	fireT: number
 
-	constructor (visual: Object3D, pos: Vector3, rot: Euler, actions: PlayerActions) {
+	constructor (visual: THREE.Object3D, pos: THREE.Vector3, rot: THREE.Euler, actions: PlayerActions) {
 		super(visual, pos, rot)
 		this.collider = new Collider(Collider.SPHERE, 1.5)
 		this.inputs = createPlayerInputs()
@@ -75,4 +75,4 @@ export default class Player extends GameObject {
 }
 
 /** Scratchpad vector */
-const _v = new Vector3()
+const _v = new THREE.Vector3()

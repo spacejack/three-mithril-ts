@@ -3,23 +3,23 @@
 // and other architectures like entity-component get a lot
 // more opinionated and require more infrastructure.
 
-import {Vector3, Euler, Object3D} from 'three'
-import Collider from './collider'
+import * as THREE from 'three'
+import Collider from './Collider'
 
 /** Base class for all game objects */
 export default class GameObject {
-	position: Vector3
-	rotation: Euler
-	visual?: Object3D
+	position: THREE.Vector3
+	rotation: THREE.Euler
+	visual?: THREE.Object3D
 	collider?: Collider
 	lifeT: number
 	isAlive: boolean
 
-	constructor (visual?: Object3D, pos?: Vector3, rot?: Euler) {
+	constructor (visual?: THREE.Object3D, pos?: THREE.Vector3, rot?: THREE.Euler) {
 		this.visual = visual
 		this.collider = undefined
-		this.position = pos ? pos.clone() : new Vector3()
-		this.rotation = rot ? rot.clone() : new Euler()
+		this.position = pos ? pos.clone() : new THREE.Vector3()
+		this.rotation = rot ? rot.clone() : new THREE.Euler()
 		if (this.visual) {
 			this.visual.position.copy(this.position)
 			this.visual.rotation.copy(this.rotation)

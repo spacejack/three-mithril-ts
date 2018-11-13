@@ -1,6 +1,6 @@
 import m from 'mithril'
 import {Stream} from 'mithril/stream'
-import LoadingBar from './loading-bar'
+import LoadingBar from './LoadingBar'
 
 export interface Attrs {
 	progress: Stream<number>

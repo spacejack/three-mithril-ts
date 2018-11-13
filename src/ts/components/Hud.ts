@@ -3,7 +3,7 @@ import {Stream} from 'mithril/stream'
 import {formatTime} from '../lib/string'
 import * as fullscreen from '../lib/fullscreen'
 //import {isWidescreen} from '../state'
-import Observer from './observer'
+import Observer from './Observer'
 import * as svgs from './svgs'
 
 export interface Attrs {

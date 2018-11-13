@@ -1,6 +1,6 @@
 import m from 'mithril'
 import {Stream} from 'mithril/stream'
-import Observer from './observer'
+import Observer from './Observer'
 
 export interface Attrs {
 	/** Progress value from 0..1 */

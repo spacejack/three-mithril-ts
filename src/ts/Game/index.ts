@@ -1,18 +1,18 @@
 import stream, {Stream} from 'mithril/stream'
-import {Vector3, Euler} from 'three'
+import * as THREE from 'three'
 import {
 	PLAYER_START_POS, PLAYER_START_ROT, GRID_SIZE,
 	BUILDING_WIDTH, BUILDING_MIN_HEIGHT, BUILDING_MAX_HEIGHT
 } from './config'
 import {Assets} from '../lib/loader'
 import * as input from '../lib/input'
-import {createScene} from './scene'
-import GameObject from './gameobject'
-import Player, {createPlayerInputs, PlayerActions} from './gameobjects/player'
-import Monkey, {MonkeyActions} from './gameobjects/monkey'
-import Bullet, {BulletActions} from './gameobjects/bullet'
-import Building from './gameobjects/building'
-import Spark from './gameobjects/spark'
+import Scene from './Scene'
+import GameObject from './GameObject'
+import Player, {createPlayerInputs, PlayerActions} from './gameobjects/Player'
+import Monkey, {MonkeyActions} from './gameobjects/Monkey'
+import Bullet, {BulletActions} from './gameobjects/Bullet'
+import Building from './gameobjects/Building'
+import Spark from './gameobjects/Spark'
 
 /** Max milliseconds per frame */
 const MAX_STEP = 100
@@ -40,7 +40,7 @@ interface Game {
  * inheritance/polymorphism aren't really needed.
  */
 function Game (canvas: HTMLCanvasElement, assets: Assets): Game {
-	const scene = createScene(canvas, assets, {antialias: true})
+	const scene = Scene(canvas, assets, {antialias: true})
 	const score = stream(0)
 	const time = stream(0)
 	const level = stream(0)
@@ -64,7 +64,7 @@ function Game (canvas: HTMLCanvasElement, assets: Assets): Game {
 
 	// Actions
 	const playerActions: PlayerActions = {
-		shoot (position: Vector3, rotation: Euler) {
+		shoot (position: THREE.Vector3, rotation: THREE.Euler) {
 			const b = new Bullet(
 				scene.addBullet(position, rotation),
 				position, rotation, bulletActions, 25, 2000
@@ -73,7 +73,7 @@ function Game (canvas: HTMLCanvasElement, assets: Assets): Game {
 		}
 	}
 	const monkeyActions: MonkeyActions = {
-		die (position: Vector3) {
+		die (position: THREE.Vector3) {
 			score(score() + 100)
 			const s = new Spark(
 				scene.addSpark(position),
@@ -83,7 +83,7 @@ function Game (canvas: HTMLCanvasElement, assets: Assets): Game {
 		}
 	}
 	const bulletActions: BulletActions = {
-		spark (position: Vector3) {
+		spark (position: THREE.Vector3) {
 			const s = new Spark(
 				scene.addSpark(position),
 				position, undefined, 500
@@ -95,8 +95,8 @@ function Game (canvas: HTMLCanvasElement, assets: Assets): Game {
 	// Private methods
 
 	function addBuildings() {
-		const pos = new Vector3()
-		const rot = new Euler()
+		const pos = new THREE.Vector3()
+		const rot = new THREE.Euler()
 		const spacing = BUILDING_WIDTH * 2
 		for (let iy = 0; iy < GRID_SIZE; ++iy) {
 			for (let ix = 0; ix < GRID_SIZE; ++ix) {
@@ -116,8 +116,8 @@ function Game (canvas: HTMLCanvasElement, assets: Assets): Game {
 	function addMonkeys() {
 		const num = 20
 		const spacing = BUILDING_WIDTH * 2
-		const p = new Vector3()
-		const r = new Euler()
+		const p = new THREE.Vector3()
+		const r = new THREE.Euler()
 		for (let i = 0; i < num; ++i) {
 			p.set(
 				Math.round(Math.random() * GRID_SIZE) * spacing - GRID_SIZE * spacing / 2,

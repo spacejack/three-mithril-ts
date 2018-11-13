@@ -1,6 +1,6 @@
 // Simple collision detection for spheres and axis-aligned bounding boxes
 
-import {Vector3} from 'three'
+import * as THREE from 'three'
 
 export type ColliderType = 1 | 2
 
@@ -9,11 +9,11 @@ export default class Collider {
 	static AABB: ColliderType   = 2
 
 	type: ColliderType
-	size: Vector3
+	size: THREE.Vector3
 
 	constructor (type: ColliderType, xs: number, ys?: number, zs?: number) {
 		this.type = type
-		this.size = new Vector3(
+		this.size = new THREE.Vector3(
 			xs,
 			type !== Collider.SPHERE && typeof ys === 'number' ? ys : xs,
 			type !== Collider.SPHERE && typeof zs === 'number' ? zs : xs
@@ -23,7 +23,7 @@ export default class Collider {
 	/**
 	 * Test if 2 objects are colliding
 	 */
-	static hit (a: Collider, ap: Vector3, b: Collider, bp: Vector3): boolean {
+	static hit (a: Collider, ap: THREE.Vector3, b: Collider, bp: THREE.Vector3): boolean {
 		if (a.type === Collider.SPHERE && b.type === Collider.SPHERE) {
 			return ap.distanceTo(bp) <= a.size.x + b.size.x
 		}
@@ -39,7 +39,7 @@ export default class Collider {
 	}
 }
 
-function distToAABB (pt: Vector3, aabbPos: Vector3, aabbSize: Vector3) {
+function distToAABB (pt: THREE.Vector3, aabbPos: THREE.Vector3, aabbSize: THREE.Vector3) {
 	const sqDist = axisDistSq(pt.x, aabbPos.x - aabbSize.x / 2, aabbPos.x + aabbSize.x / 2)
 		+ axisDistSq(pt.y, aabbPos.y - aabbSize.y / 2, aabbPos.y + aabbSize.y / 2)
 		+ axisDistSq(pt.z, aabbPos.z - aabbSize.z / 2, aabbPos.z + aabbSize.z / 2)

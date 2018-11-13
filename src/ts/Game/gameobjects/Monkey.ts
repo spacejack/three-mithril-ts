@@ -1,22 +1,22 @@
-import {Object3D, Vector3, Euler} from 'three'
-import Collider from '../collider'
-import GameObject from '../gameobject'
+import * as THREE from 'three'
+import Collider from '../Collider'
+import GameObject from '../GameObject'
 
 export interface MonkeyActions {
-	die(position: Vector3): void
+	die(position: THREE.Vector3): void
 }
 
 export default class Monkey extends GameObject {
-	velocity: Vector3
+	velocity: THREE.Vector3
 	actions: MonkeyActions
 
 	constructor (
-		visual: Object3D, pos: Vector3, rot: Euler,
+		visual: THREE.Object3D, pos: THREE.Vector3, rot: THREE.Euler,
 		actions: MonkeyActions
 	) {
 		super(visual, pos, rot)
 		const r = this.rotation.z
-		this.velocity = new Vector3()
+		this.velocity = new THREE.Vector3()
 		this.collider = new Collider(Collider.SPHERE, 1.0)
 		this.actions = actions
 	}

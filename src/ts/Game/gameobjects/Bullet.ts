@@ -1,24 +1,24 @@
-import {Object3D, Vector3, Euler} from 'three'
-import Collider from '../collider'
-import GameObject from '../gameobject'
+import * as THREE from 'three'
+import Collider from '../Collider'
+import GameObject from '../GameObject'
 
 export interface BulletActions {
-	spark(position: Vector3): void
+	spark(position: THREE.Vector3): void
 }
 
 export default class Bullet extends GameObject {
 	lifeSpan: number
-	velocity: Vector3
+	velocity: THREE.Vector3
 	actions: BulletActions
 
 	constructor (
-		visual: Object3D, pos: Vector3, rot: Euler,
+		visual: THREE.Object3D, pos: THREE.Vector3, rot: THREE.Euler,
 		actions: BulletActions, absVel = 10, lifeSpan = 1000
 	) {
 		super(visual, pos, rot)
 		this.lifeSpan = lifeSpan
 		const r = this.rotation.z
-		this.velocity = new Vector3(absVel * Math.cos(r), absVel * Math.sin(r), 0)
+		this.velocity = new THREE.Vector3(absVel * Math.cos(r), absVel * Math.sin(r), 0)
 		this.collider = new Collider(Collider.SPHERE, 0.5)
 		this.actions = actions
 	}

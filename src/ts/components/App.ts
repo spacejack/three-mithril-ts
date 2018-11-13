@@ -2,9 +2,9 @@ import m from 'mithril'
 import {DEFAULT_HEIGHT, DEFAULT_FONT_SIZE} from '../config'
 import {fontSize} from '../state'
 import {loadAssets} from '../lib/loader'
-import Game from '../game'
-import TitleBlock from './title-block'
-import Hud from './hud'
+import Game from '../Game'
+import TitleBlock from './TitleBlock'
+import Hud from './Hud'
 
 /**
  * Root application component.

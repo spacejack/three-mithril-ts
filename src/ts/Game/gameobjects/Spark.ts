@@ -1,11 +1,11 @@
-import {Object3D, Vector3, Euler, Mesh, MeshBasicMaterial} from 'three'
-import GameObject from '../gameobject'
+import * as THREE from 'three'
+import GameObject from '../GameObject'
 
 export default class Spark extends GameObject {
 	lifeSpan: number
 
 	constructor (
-		visual: Object3D, pos: Vector3, rot?: Euler,
+		visual: THREE.Object3D, pos: THREE.Vector3, rot?: THREE.Euler,
 		lifeSpan = 500
 	) {
 		super(visual, pos, rot)
@@ -23,10 +23,10 @@ export default class Spark extends GameObject {
 
 	render() {
 		super.render()
-		const vis = this.visual as Mesh
+		const vis = this.visual as THREE.Mesh
 		const s = 1.0 + 3.0 * this.lifeT / this.lifeSpan
 		vis.scale.set(s, s, s)
-		const mat = vis.material as MeshBasicMaterial
+		const mat = vis.material as THREE.MeshBasicMaterial
 		mat.opacity = 0.75 - 0.75 * this.lifeT / this.lifeSpan
 	}
 }
