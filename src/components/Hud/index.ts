@@ -2,7 +2,6 @@ import m from 'mithril'
 import {Stream} from 'mithril/stream'
 import {formatTime} from '../../lib/string'
 import * as fullscreen from '../../lib/fullscreen'
-//import {isWidescreen} from '../state'
 import Observer from '../Observer'
 import * as svgs from '../svgs'
 
@@ -34,18 +33,6 @@ const Hud: m.Component<Attrs> = {
 				})
 			),
 			m('.control-block',
-				/* !fullscreen.is() && m('.widescreen',
-					m('button',
-						{
-							type: 'button',
-							onclick() {
-								isWidescreen(!isWidescreen())
-							}
-						},
-						isWidescreen() ?
-							svgs.widescreenOff() : svgs.widescreenOn()
-					)
-				), */
 				m('.fullscreen',
 					m('button',
 						{
