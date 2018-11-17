@@ -1,5 +1,7 @@
 import m from 'mithril'
 
+// Functions that render inline SVGs
+
 export function widescreenOn() {
 	return m('svg',
 		{

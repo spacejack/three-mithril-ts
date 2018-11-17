@@ -1,11 +1,6 @@
 import * as THREE from 'three'
 import {Assets} from '../lib/loader'
-import {
-	FOV, VIEW_DEPTH,
-	FOG_COLOR, FOG_NEAR, FOG_FAR,
-	LIGHT_DIR, LIGHT_COLOR, AMBIENT_COLOR,
-	PLAYER_START_POS, PLAYER_START_ROT
-} from './config'
+import * as config from './config'
 
 export interface SceneOptions {
 	antialias?: boolean
@@ -61,11 +56,11 @@ class SceneWebGL implements Scene {
 	constructor (canvas: HTMLCanvasElement, assets: Assets, opts: SceneOptions = {}) {
 		this.canvas = canvas
 		this.assets = assets
-		this.assets.geometries['monkey'].rotateX(Math.PI * 0.5)
-		this.assets.geometries['bullet'].scale(0.5, 0.5, 0.5)
-		this.assets.geometries['spark'] = new THREE.SphereBufferGeometry(0.25, 16, 8)
-		this.assets.textures['bricks'].repeat.set(2, 2)
-		this.assets.textures['bricks'].wrapS = this.assets.textures['bricks'].wrapT = THREE.RepeatWrapping
+		this.assets.geometries.monkey.rotateX(Math.PI * 0.5)
+		this.assets.geometries.bullet.scale(0.5, 0.5, 0.5)
+		this.assets.geometries.spark = new THREE.SphereBufferGeometry(0.25, 16, 8)
+		this.assets.textures.bricks.repeat.set(2, 2)
+		this.assets.textures.bricks.wrapS = this.assets.textures.bricks.wrapT = THREE.RepeatWrapping
 		this.materials = {
 			monkey: new THREE.MeshLambertMaterial({color: 0x887755}),
 			building: new THREE.MeshLambertMaterial({color: 0xFFFFFF, map: this.assets.textures['bricks']}),
@@ -76,7 +71,7 @@ class SceneWebGL implements Scene {
 		// Make transparent so it isn't rendered as black for 1 frame at startup
 		this.renderer = new THREE.WebGLRenderer({
 			canvas, antialias: !!opts.antialias,
-			clearColor: FOG_COLOR.getHex(), alpha: true, clearAlpha: 1
+			clearColor: config.fogColor.getHex(), alpha: true, clearAlpha: 1
 		})
 		if (!this.renderer) {
 			throw new Error("Failed to create THREE.WebGLRenderer")
@@ -87,17 +82,17 @@ class SceneWebGL implements Scene {
 		this.displayHeight = rc.height
 
 		this.camera = new THREE.PerspectiveCamera(
-			FOV, this.displayWidth / this.displayHeight, 1.0, VIEW_DEPTH
+			config.fov, this.displayWidth / this.displayHeight, 1.0, config.viewDepth
 		)
 
 		this.scene = new THREE.Scene()
-		this.scene.fog = new THREE.Fog(FOG_COLOR.getHex(), FOG_NEAR, FOG_FAR)
+		this.scene.fog = new THREE.Fog(config.fogColor.getHex(), config.fogNear, config.fogFar)
 
-		this.sunLight = new THREE.DirectionalLight(LIGHT_COLOR.getHex(), 1.0)
-		this.sunLight.position.set(-LIGHT_DIR.x, -LIGHT_DIR.y, -LIGHT_DIR.z)
+		this.sunLight = new THREE.DirectionalLight(config.lightColor.getHex(), 1.0)
+		this.sunLight.position.set(-config.lightDir.x, -config.lightDir.y, -config.lightDir.z)
 		this.scene.add(this.sunLight)
 
-		this.ambientLight = new THREE.AmbientLight(AMBIENT_COLOR.getHex())
+		this.ambientLight = new THREE.AmbientLight(config.ambientColor.getHex())
 		this.scene.add(this.ambientLight)
 
 		// Setup the camera so Z is up.
@@ -112,11 +107,11 @@ class SceneWebGL implements Scene {
 		this.camHolder = new THREE.Object3D()
 		this.camHolder.rotation.order = "ZYX"
 		this.camHolder.add(this.camera)
-		this.camHolder.position.copy(PLAYER_START_POS)
+		this.camHolder.position.copy(config.playerStartPos)
 		// (Don't use Euler.copy because it will overwrite rotation.order)
-		this.camHolder.rotation.x = PLAYER_START_ROT.x
-		this.camHolder.rotation.y = PLAYER_START_ROT.y
-		this.camHolder.rotation.z = PLAYER_START_ROT.z
+		this.camHolder.rotation.x = config.playerStartRot.x
+		this.camHolder.rotation.y = config.playerStartRot.y
+		this.camHolder.rotation.z = config.playerStartRot.z
 
 		// Add camera to scene
 		this.scene.add(this.camHolder)

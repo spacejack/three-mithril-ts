@@ -1,10 +1,10 @@
 import m from 'mithril'
 import {Stream} from 'mithril/stream'
-import {formatTime} from '../lib/string'
-import * as fullscreen from '../lib/fullscreen'
+import {formatTime} from '../../lib/string'
+import * as fullscreen from '../../lib/fullscreen'
 //import {isWidescreen} from '../state'
-import Observer from './Observer'
-import * as svgs from './svgs'
+import Observer from '../Observer'
+import * as svgs from '../svgs'
 
 export interface Attrs {
 	score: Stream<number>

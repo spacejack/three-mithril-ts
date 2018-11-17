@@ -1,10 +1,10 @@
 import m from 'mithril'
-import {DEFAULT_HEIGHT, DEFAULT_FONT_SIZE} from '../config'
-import {fontSize} from '../state'
-import {loadAssets} from '../lib/loader'
-import Game from '../Game'
-import TitleBlock from './TitleBlock'
-import Hud from './Hud'
+import * as config from '../../config'
+import * as state from '../../state'
+import {loadAssets} from '../../lib/loader'
+import Game from '../../Game'
+import TitleBlock from '../TitleBlock'
+import Hud from '../Hud'
 
 /**
  * Root application component.
@@ -42,7 +42,7 @@ export default function App(): m.Component {
 		if (!canvas) return
 		const {width, height} = canvas.getBoundingClientRect()
 		// Recompute pixels-per-em
-		fontSize(DEFAULT_FONT_SIZE * height / DEFAULT_HEIGHT)
+		state.fontSize(config.defaultFontSize * height / config.defaultAppHeight)
 		if (game) {
 			// Must resize 3D renderer
 			game.resize(width, height)
@@ -83,7 +83,7 @@ export default function App(): m.Component {
 			return m('.app',
 				m('canvas.app-canvas'),
 				m('.ui',
-					{style: 'font-size: ' + fontSize() + 'px'},
+					{style: 'font-size: ' + state.fontSize() + 'px'},
 					!started
 						// Show title block until user clicks start
 						? m(TitleBlock, {
@@ -92,7 +92,7 @@ export default function App(): m.Component {
 							error: loadError,
 							onStart: start
 						})
-						// Show game & HUD when started
+						// Show HUD when game started
 						: !!game && m(Hud, {
 							score: game.score,
 							time: game.time,

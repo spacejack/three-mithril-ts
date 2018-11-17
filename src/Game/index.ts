@@ -1,9 +1,6 @@
 import stream, {Stream} from 'mithril/stream'
 import * as THREE from 'three'
-import {
-	PLAYER_START_POS, PLAYER_START_ROT, GRID_SIZE,
-	BUILDING_WIDTH, BUILDING_MIN_HEIGHT, BUILDING_MAX_HEIGHT
-} from './config'
+import * as config from './config'
 import {Assets} from '../lib/loader'
 import * as input from '../lib/input'
 import Scene from './Scene'
@@ -97,31 +94,31 @@ function Game (canvas: HTMLCanvasElement, assets: Assets): Game {
 	function addBuildings() {
 		const pos = new THREE.Vector3()
 		const rot = new THREE.Euler()
-		const spacing = BUILDING_WIDTH * 2
-		for (let iy = 0; iy < GRID_SIZE; ++iy) {
-			for (let ix = 0; ix < GRID_SIZE; ++ix) {
-				const height = BUILDING_MIN_HEIGHT
-					+ Math.random() * (BUILDING_MAX_HEIGHT - BUILDING_MIN_HEIGHT)
+		const spacing = config.buildingWidth * 2
+		for (let iy = 0; iy < config.gridSize; ++iy) {
+			for (let ix = 0; ix < config.gridSize; ++ix) {
+				const height = config.buildingMinHeight
+					+ Math.random() * (config.buildingMaxHeight - config.buildingMinHeight)
 				pos.set(
-					(ix - GRID_SIZE / 2) * spacing + BUILDING_WIDTH,
-					(iy - GRID_SIZE / 2) * spacing + BUILDING_WIDTH,
+					(ix - config.gridSize / 2) * spacing + config.buildingWidth,
+					(iy - config.gridSize / 2) * spacing + config.buildingWidth,
 					height / 2
 				)
-				const visual = scene.addBuilding(pos.x, pos.y, BUILDING_WIDTH, height)
-				buildings.push(new Building(visual, pos, rot, BUILDING_WIDTH, height))
+				const visual = scene.addBuilding(pos.x, pos.y, config.buildingWidth, height)
+				buildings.push(new Building(visual, pos, rot, config.buildingWidth, height))
 			}
 		}
 	}
 
 	function addMonkeys() {
 		const num = 20
-		const spacing = BUILDING_WIDTH * 2
+		const spacing = config.buildingWidth * 2
 		const p = new THREE.Vector3()
 		const r = new THREE.Euler()
 		for (let i = 0; i < num; ++i) {
 			p.set(
-				Math.round(Math.random() * GRID_SIZE) * spacing - GRID_SIZE * spacing / 2,
-				Math.round(Math.random() * GRID_SIZE) * spacing - GRID_SIZE * spacing / 2,
+				Math.round(Math.random() * config.gridSize) * spacing - config.gridSize * spacing / 2,
+				Math.round(Math.random() * config.gridSize) * spacing - config.gridSize * spacing / 2,
 				2.0
 			)
 			r.z = Math.random() * Math.PI * 2.0
@@ -142,7 +139,7 @@ function Game (canvas: HTMLCanvasElement, assets: Assets): Game {
 		level(lvl)
 		addMonkeys()
 		player = new Player(
-			scene.getCamera(), PLAYER_START_POS, PLAYER_START_ROT,
+			scene.getCamera(), config.playerStartPos, config.playerStartRot,
 			playerActions
 		)
 	}

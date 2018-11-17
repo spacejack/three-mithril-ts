@@ -1,22 +1,22 @@
 {
   "name": "three-mithril-ts",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "THREE.js, Mithril.js, TypeScript starter project",
   "scripts": {
-    "compile:ts": "browserify --debug src/ts/main.ts -p [ tsify --project src/ts/tsconfig.json ] -x=pojod -x=mithril -x=mithril/stream -x=three -o public/js/app.js",
+    "compile:ts": "browserify --debug src/main.ts -p [ tsify --project src/tsconfig.json ] -x=pojod -x=mithril -x=mithril/stream -x=three -o public/js/app.js",
     "compile:vendor": "browserify --debug -r pojod -r mithril -r mithril/stream -r three -o public/js/vendor.js",
-    "compile:pcss": "postcss src/pcss/index.pcss -o public/css/app.css",
-    "watch:pcss": "postcss src/pcss/index.pcss --watch -o public/css/app.css",
-    "build:ts": "browserify src/ts/main.ts -p [ tsify --project src/ts/tsconfig.json ] -x=pojod -x=mithril -x=mithril/stream -x=three | uglifyjs -cm -o public/js/app.js",
+    "compile:pcss": "postcss src/index.pcss -o public/css/app.css",
+    "watch:pcss": "postcss src/index.pcss --watch -o public/css/app.css",
+    "build:ts": "browserify src/main.ts -p [ tsify --project src/tsconfig.json ] -x=pojod -x=mithril -x=mithril/stream -x=three | uglifyjs -cm -o public/js/app.js",
     "build:vendor": "browserify -r pojod -r mithril -r mithril/stream -r three | uglifyjs -cm -o public/js/vendor.js",
-    "build:pcss": "postcss src/pcss/index.pcss --env production -o public/css/app.css",
+    "build:pcss": "postcss src/index.pcss --env production -o public/css/app.css",
     "clean:ts": "rm -f public/js/app.js",
     "clean:vendor": "rm -f public/js/vendor.js",
     "clean:pcss": "rm -f public/css/app.css",
     "compile": "run-s compile:*",
     "build": "run-s build:*",
     "clean": "run-s clean:*",
-    "serve": "budo src/ts/main.ts:js/app.js -p 3000 --dir public --live=*.{html,css} -- --debug -p [ browserify-hmr ] -p [ tsify --project src/ts/tsconfig.json ] -x=pojod -x=mithril -x=mithril/stream -x=three",
+    "serve": "budo src/main.ts:js/app.js -p 3000 --dir public --live=*.{html,css} -- --debug -p [ browserify-hmr ] -p [ tsify --project src/tsconfig.json ] -x=pojod -x=mithril -x=mithril/stream -x=three",
     "start": "run-p compile:vendor watch:* serve"
   },
   "repository": {
@@ -33,7 +33,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/mithril": "^1.1.13",
-    "@types/three": "^0.93.8",
+    "@types/three": "^0.93.9",
     "autoprefixer": "^9.3.1",
     "browserify": "^16.2.3",
     "browserify-hmr": "^0.3.7",
