@@ -1,6 +1,6 @@
 {
   "name": "three-mithril-ts",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "THREE.js, Mithril.js, TypeScript starter project",
   "scripts": {
     "compile:ts": "browserify --debug src/main.ts -p [ tsify --project src/tsconfig.json ] -x=pojod -x=mithril -x=mithril/stream -x=three -o public/js/app.js",
@@ -33,7 +33,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/mithril": "^1.1.13",
-    "@types/three": "^0.93.9",
+    "@types/three": "^0.93.10",
     "autoprefixer": "^9.3.1",
     "browserify": "^16.2.3",
     "browserify-hmr": "^0.3.7",
