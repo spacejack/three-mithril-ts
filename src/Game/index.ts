@@ -3,11 +3,12 @@ import * as THREE from 'three'
 import * as config from './config'
 import {Assets} from '../lib/loader'
 import * as input from '../lib/input'
-import Scene from './Scene'
+import GameScene from './GameScene'
+import GameEvent from './GameEvent'
 import GameObject from './GameObject'
-import Player, {createPlayerInputs, PlayerActions} from './gameobjects/Player'
-import Monkey, {MonkeyActions} from './gameobjects/Monkey'
-import Bullet, {BulletActions} from './gameobjects/Bullet'
+import Player, {PlayerInputs, PlayerShootEvent} from './gameobjects/Player'
+import Monkey from './gameobjects/Monkey'
+import Bullet from './gameobjects/Bullet'
 import Building from './gameobjects/Building'
 import Spark from './gameobjects/Spark'
 
@@ -37,7 +38,7 @@ interface Game {
  * inheritance/polymorphism aren't really needed.
  */
 function Game (canvas: HTMLCanvasElement, assets: Assets): Game {
-	const scene = Scene(canvas, assets, {antialias: true})
+	const scene = GameScene(canvas, assets, {antialias: true})
 	const score = stream(0)
 	const time = stream(0)
 	const level = stream(0)
@@ -45,12 +46,14 @@ function Game (canvas: HTMLCanvasElement, assets: Assets): Game {
 	let running = false
 
 	// Inputs
-	const playerInputs = createPlayerInputs()
+	const playerInputs = PlayerInputs()
 	input.createInput('forward', [38, 87])
 	input.createInput('back', [40, 83])
 	input.createInput('left', [37, 65])
 	input.createInput('right', [39, 68])
 	input.createInput('fire', [16, 17, 32])
+
+	// Private methods
 
 	// Game objects
 	let player: Player | undefined
@@ -59,38 +62,34 @@ function Game (canvas: HTMLCanvasElement, assets: Assets): Game {
 	const bullets: Bullet[] = []
 	const sparks: Spark[] = []
 
-	// Actions
-	const playerActions: PlayerActions = {
-		shoot (position: THREE.Vector3, rotation: THREE.Euler) {
-			const b = new Bullet(
-				scene.addBullet(position, rotation),
-				position, rotation, bulletActions, 25, 2000
-			)
-			bullets.push(b)
-		}
-	}
-	const monkeyActions: MonkeyActions = {
-		die (position: THREE.Vector3) {
-			score(score() + 100)
-			const s = new Spark(
-				scene.addSpark(position),
-				position, undefined, 500
-			)
-			sparks.push(s)
-		}
-	}
-	const bulletActions: BulletActions = {
-		spark (position: THREE.Vector3) {
-			const s = new Spark(
-				scene.addSpark(position),
-				position, undefined, 500
-			)
-			sparks.push(s)
-		}
+	// GameObject Event handlers
+	function onPlayerShoot (e: PlayerShootEvent) {
+		const b = new Bullet({
+			visual: scene.addBullet(e.position, e.rotation),
+			position: e.position, rotation: e.rotation, onKill: onSpark,
+			absVel: 30, duration: 2000
+		})
+		bullets.push(b)
 	}
 
-	// Private methods
+	function onMonkeyDie (e: GameEvent) {
+		score(score() + 100)
+		sparks.push(new Spark({
+			visual: scene.addSpark(e.position),
+			position: e.position,
+			duration: 500
+		}))
+	}
 
+	function onSpark (e: GameEvent) {
+		sparks.push(new Spark({
+			visual: scene.addSpark(e.position),
+			position: e.position,
+			duration: 500
+		}))
+	}
+
+	/** Generate a bunch of buildings to fill the scene */
 	function addBuildings() {
 		const pos = new THREE.Vector3()
 		const rot = new THREE.Euler()
@@ -105,7 +104,10 @@ function Game (canvas: HTMLCanvasElement, assets: Assets): Game {
 					height / 2
 				)
 				const visual = scene.addBuilding(pos.x, pos.y, config.buildingWidth, height)
-				buildings.push(new Building(visual, pos, rot, config.buildingWidth, height))
+				buildings.push(new Building({
+					visual, position: pos, rotation: rot,
+					width: config.buildingWidth, height
+				}))
 			}
 		}
 	}
@@ -123,8 +125,9 @@ function Game (canvas: HTMLCanvasElement, assets: Assets): Game {
 			)
 			r.z = Math.random() * Math.PI * 2.0
 			const mesh = scene.addMonkey(p, r)
-			const monkey = new Monkey(mesh, p, r, monkeyActions)
-			monkeys.push(monkey)
+			monkeys.push(new Monkey({
+				visual: mesh, position: p, rotation: r, onKill: onMonkeyDie
+			}))
 		}
 	}
 
@@ -138,10 +141,12 @@ function Game (canvas: HTMLCanvasElement, assets: Assets): Game {
 	function initLevel (lvl: number) {
 		level(lvl)
 		addMonkeys()
-		player = new Player(
-			scene.getCamera(), config.playerStartPos, config.playerStartRot,
-			playerActions
-		)
+		player = new Player({
+			visual: scene.getCamera(),
+			position: config.playerStartPos,
+			rotation: config.playerStartRot,
+			onShoot: onPlayerShoot
+		})
 	}
 
 	/**

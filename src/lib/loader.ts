@@ -1,17 +1,15 @@
 // Loader that provides a dictionary of named assets
 
 import m from 'mithril'
-import stream from 'mithril/stream'
-import {Stream} from 'mithril/stream'
-import {BufferGeometry, Texture, BufferGeometryLoader, TextureLoader} from 'three'
+import * as THREE from 'three'
 import D from 'pojod'
 
 export interface Assets {
 	texts: {[id: string]: string}
 	datas: {[id: string]: any}
 	images: {[id: string]: HTMLImageElement}
-	geometries: {[id: string]: BufferGeometry}
-	textures: {[id: string]: Texture}
+	geometries: {[id: string]: THREE.BufferGeometry}
+	textures: {[id: string]: THREE.Texture}
 	//sounds: {[id: string]: Howler.Howl}
 }
 
@@ -29,16 +27,11 @@ export interface AssetList {
 	//sounds?: AssetDescription[]
 }
 
-interface LoadResult {
-	promise: Promise<Assets>
-	progress: Stream<number>
-}
-
 /**
  * Returns an object that contains a promise that resolves with loaded assets
  * and a stream containing the current loading progress as a value from 0..1
  */
-export function loadAssets (assetList: AssetList): LoadResult {
+export function loadAssets (assetList: AssetList, onProgress?: (p: number) => void): Promise<Assets> {
 	const assets: Assets = {
 		texts: Object.create(null),
 		datas: Object.create(null),
@@ -56,7 +49,7 @@ export function loadAssets (assetList: AssetList): LoadResult {
 	}
 
 	const keys = D.keys(assets)
-	const progress = stream(0)
+	let progress = 0
 	// Count total number of assets to load
 	const totalToLoad = keys.reduce((total, k) => {
 		if (assetList[k]) {
@@ -67,24 +60,22 @@ export function loadAssets (assetList: AssetList): LoadResult {
 
 	let totalLoaded = 0
 
-	const promises = keys.reduce((ps, k) => {
-		if (!assetList[k]) return ps
-		return ps.concat(
+	const promises = keys.reduce<Promise<any>[]>(
+		(ps, k) => !assetList[k] ? ps : ps.concat(
 			assetList[k]!.map(
 				ad => loadFns[k](ad.url).then(resource => {
 					assets[k][ad.name] = resource
 					totalLoaded += 1
-					progress(totalLoaded / totalToLoad)
+					progress = totalLoaded / totalToLoad
+					onProgress && onProgress(progress)
 					return resource
 				})
 			)
-		)
-	}, [] as Promise<any>[])
+		),
+		[]
+	)
 
-	return {
-		promise: Promise.all(promises).then(() => assets),
-		progress
-	}
+	return Promise.all(promises).then(() => assets)
 }
 
 function loadText (url: string): Promise<string> {
@@ -108,9 +99,9 @@ function loadImage (url: string): Promise<HTMLImageElement> {
 	})
 }
 
-function loadTexture (url: string): Promise<Texture> {
+function loadTexture (url: string): Promise<THREE.Texture> {
 	return new Promise((resolve, reject) => {
-		const loader = new TextureLoader()
+		const loader = new THREE.TextureLoader()
 		loader.load(
 			url,
 			texture => {
@@ -125,8 +116,8 @@ function loadTexture (url: string): Promise<Texture> {
 }
 
 function loadGeometry (url: string) {
-	return new Promise<BufferGeometry>((resolve, reject) => {
-		const loader = new BufferGeometryLoader()
+	return new Promise<THREE.BufferGeometry>((resolve, reject) => {
+		const loader = new THREE.BufferGeometryLoader()
 		loader.load(url, resolve, undefined,
 			(xhr: XMLHttpRequest) => {
 				reject(new Error(`Failed to load '${url}' (${xhr.status})`))

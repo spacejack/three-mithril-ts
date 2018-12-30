@@ -1,24 +1,14 @@
 import * as THREE from 'three'
 import Collider from '../Collider'
-import GameObject from '../GameObject'
-
-export interface MonkeyActions {
-	die(position: THREE.Vector3): void
-}
+import GameObject, {GameObjectInfo} from '../GameObject'
 
 export default class Monkey extends GameObject {
 	velocity: THREE.Vector3
-	actions: MonkeyActions
 
-	constructor (
-		visual: THREE.Object3D, pos: THREE.Vector3, rot: THREE.Euler,
-		actions: MonkeyActions
-	) {
-		super(visual, pos, rot)
-		const r = this.rotation.z
+	constructor (info: GameObjectInfo = {}) {
+		super(info)
 		this.velocity = new THREE.Vector3()
-		this.collider = new Collider(Collider.SPHERE, 1.0)
-		this.actions = actions
+		this.collider = info.collider || Collider.create(Collider.SPHERE, 1.0)
 	}
 
 	update (dt: number) {
@@ -28,11 +18,5 @@ export default class Monkey extends GameObject {
 		this.position.y += ft * this.velocity.y
 		this.rotation.z += ft
 		return true
-	}
-
-	kill() {
-		if (!this.isAlive) return
-		super.kill()
-		this.actions.die(this.position)
 	}
 }

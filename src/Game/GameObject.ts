@@ -4,28 +4,54 @@
 // more opinionated and require more infrastructure.
 
 import * as THREE from 'three'
+import GameEvent from './GameEvent'
+import GameEventEmitter from './GameEventEmitter'
 import Collider from './Collider'
 
+/** Object creation options */
+export interface GameObjectInfo {
+	position?: THREE.Vector3
+	rotation?: THREE.Euler
+	visual?: THREE.Object3D
+	collider?: Collider
+	/** Lifespan in ms after which it will be snuffed */
+	duration?: number
+	/** Optional onKill listener */
+	onKill?(e: GameEvent): void
+	/** Optional onSnuff listener */
+	onSnuff?(e: GameEvent): void
+}
+
 /** Base class for all game objects */
-export default class GameObject {
+export default class GameObject extends GameEventEmitter {
 	position: THREE.Vector3
 	rotation: THREE.Euler
 	visual?: THREE.Object3D
 	collider?: Collider
+	duration?: number
+
 	lifeT: number
 	isAlive: boolean
 
-	constructor (visual?: THREE.Object3D, pos?: THREE.Vector3, rot?: THREE.Euler) {
-		this.visual = visual
-		this.collider = undefined
-		this.position = pos ? pos.clone() : new THREE.Vector3()
-		this.rotation = rot ? rot.clone() : new THREE.Euler()
+	constructor (info: GameObjectInfo = {}) {
+		super()
+		this.visual = info.visual
+		this.collider = info.collider
+		this.position = info.position ? info.position.clone() : new THREE.Vector3()
+		this.rotation = info.rotation ? info.rotation.clone() : new THREE.Euler()
 		if (this.visual) {
 			this.visual.position.copy(this.position)
 			this.visual.rotation.copy(this.rotation)
 		}
+		this.duration = info.duration
 		this.lifeT = 0
 		this.isAlive = true
+		if (info.onSnuff) {
+			this.on('snuff', info.onSnuff)
+		}
+		if (info.onKill) {
+			this.on('kill', info.onKill)
+		}
 	}
 
 	/** Update a list of game objects */
@@ -98,6 +124,10 @@ export default class GameObject {
 	update (dt: number): boolean {
 		if (!this.isAlive) return false
 		this.lifeT += dt
+		if (this.duration != null && this.lifeT >= this.duration) {
+			this.snuff()
+			return false
+		}
 		return true
 	}
 
@@ -112,14 +142,18 @@ export default class GameObject {
 	}
 
 	/** End this object's life */
-	snuff(): void {
-		if (!this.isAlive) return
+	snuff(): boolean {
+		if (!this.isAlive) return false
+		this.emit({name: 'snuff', sender: this, position: this.position})
 		this.isAlive = false
+		return true
 	}
 
 	/** Violently end this object's life */
-	kill(): void {
-		if (!this.isAlive) return
+	kill(): boolean {
+		if (!this.isAlive) return false
+		this.emit({name: 'kill', sender: this, position: this.position})
 		this.snuff()
+		return true
 	}
 }

@@ -1,4 +1,5 @@
 import m from 'mithril'
+import stream from 'mithril/stream'
 import * as config from '../../config'
 import * as state from '../../state'
 import {loadAssets} from '../../lib/loader'
@@ -15,7 +16,8 @@ export default function App(): m.Component {
 	// Executes when component instance is instantiated.
 
 	// Start loading game assets...
-	const {promise, progress} = loadAssets({
+	const progress = stream<number>()
+	const promise = loadAssets({
 		geometries: [
 			{name: 'monkey', url: 'data/mesh/monkey.json'},
 			{name: 'bullet', url: 'data/mesh/bullet.json'}
@@ -24,7 +26,7 @@ export default function App(): m.Component {
 			{name: 'ground', url: 'data/tex/ground.jpg'},
 			{name: 'bricks', url: 'data/tex/bricks.jpg'}
 		]
-	})
+	}, progress)
 
 	let container: HTMLElement | undefined
 	let canvas: HTMLCanvasElement | undefined

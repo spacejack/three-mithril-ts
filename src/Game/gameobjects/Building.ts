@@ -1,14 +1,17 @@
-import * as THREE from 'three'
 import Collider from '../Collider'
-import GameObject from '../GameObject'
+import GameObject, {GameObjectInfo} from '../GameObject'
+
+export interface BuildingInfo extends GameObjectInfo {
+	width: number
+	height: number
+}
 
 export default class Building extends GameObject {
-	constructor (
-		visual: THREE.Object3D, pos: THREE.Vector3, rot: THREE.Euler,
-		width: number, height: number
-	) {
-		super(visual, pos, rot)
-		this.collider = new Collider(Collider.AABB, width, width, height)
+	constructor (info: BuildingInfo) {
+		super(info)
+		this.collider = info.collider || Collider.create(
+			Collider.AABB, info.width, info.width, info.height
+		)
 	}
 
 	render() {

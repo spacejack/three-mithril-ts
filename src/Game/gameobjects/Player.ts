@@ -1,10 +1,17 @@
 import * as THREE from 'three'
 import Collider from '../Collider'
-import GameObject from '../GameObject'
+import GameEvent from '../GameEvent'
+import GameObject, {GameObjectInfo} from '../GameObject'
+import {GameEventCallback} from '../GameEventEmitter'
 
 const ROT_VEL = Math.PI / 2.0
 const FWD_VEL = 8.0
 const FIRE_RATE = 333
+
+export interface PlayerShootEvent extends GameEvent {
+	position: THREE.Vector3
+	rotation: THREE.Euler
+}
 
 /** Player inputs */
 export interface PlayerInputs {
@@ -15,7 +22,7 @@ export interface PlayerInputs {
 	fire: boolean
 }
 
-export function createPlayerInputs(): PlayerInputs {
+export function PlayerInputs(): PlayerInputs {
 	return {
 		forward: false,
 		back: false,
@@ -25,22 +32,30 @@ export function createPlayerInputs(): PlayerInputs {
 	}
 }
 
-export interface PlayerActions {
-	shoot(position: THREE.Vector3, rotation: THREE.Euler): void
+export interface PlayerInfo extends GameObjectInfo {
+	onShoot(e: PlayerShootEvent): void
 }
 
 export default class Player extends GameObject {
 	inputs: PlayerInputs
-	actions: PlayerActions
 	/* Remaining shot cooldown time */
 	fireT: number
 
-	constructor (visual: THREE.Object3D, pos: THREE.Vector3, rot: THREE.Euler, actions: PlayerActions) {
-		super(visual, pos, rot)
-		this.collider = new Collider(Collider.SPHERE, 1.5)
-		this.inputs = createPlayerInputs()
-		this.actions = actions
+	constructor (info: PlayerInfo) {
+		super(info)
+		this.collider = info.collider || Collider.create(Collider.SPHERE, 1.5)
+		this.inputs = PlayerInputs()
 		this.fireT = 0
+		this.on('shoot', info.onShoot)
+	}
+
+	// Override for refined types
+	on (name: 'shoot', cb: (e: PlayerShootEvent) => void): void {
+		return super.on(name, cb as GameEventCallback)
+	}
+
+	emit (e: PlayerShootEvent) {
+		return super.emit(e)
 	}
 
 	setInputs (i: PlayerInputs) {
@@ -67,7 +82,9 @@ export default class Player extends GameObject {
 		this.rotation.z += rvel
 		if (i.fire && this.fireT <= 0) {
 			_v.set(this.position.x, this.position.y, this.position.z - 0.5)
-			this.actions.shoot(_v, this.rotation)
+			this.emit({
+				name: 'shoot', sender: this, position: _v, rotation: this.rotation
+			})
 			this.fireT = FIRE_RATE
 		}
 		return true
@@ -75,4 +92,4 @@ export default class Player extends GameObject {
 }
 
 /** Scratchpad vector */
-const _v = new THREE.Vector3()
+const _v = new THREE.Vector3() // tslint:disable-line variable-name

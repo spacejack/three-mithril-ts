@@ -2,14 +2,14 @@ import * as THREE from 'three'
 import {Assets} from '../lib/loader'
 import * as config from './config'
 
-export interface SceneOptions {
+export interface GameSceneOptions {
 	antialias?: boolean
 }
 
 /**
  * A high-level scene wrapper
  */
-interface Scene {
+interface GameScene {
 	setCamera (pos?: THREE.Vector3, rot?: THREE.Euler): void
 	getCamera(): THREE.Object3D
 	addBuilding(x: number, y: number, width: number, height: number): THREE.Object3D
@@ -23,12 +23,12 @@ interface Scene {
 }
 
 /** Creates a game Scene instance */
-function Scene (canvas: HTMLCanvasElement, assets: Assets, opts?: SceneOptions): Scene {
+function GameScene (canvas: HTMLCanvasElement, assets: Assets, opts?: GameSceneOptions): GameScene {
 	// (could potentially create a non-webgl scene)
-	return new SceneWebGL(canvas, assets, opts)
+	return new GameSceneWebGL(canvas, assets, opts)
 }
 
-export default Scene
+export default GameScene
 
 interface Materials {
 	monkey: THREE.MeshLambertMaterial
@@ -40,7 +40,7 @@ interface Materials {
 /**
  * WebGL Implementation
  */
-class SceneWebGL implements Scene {
+class GameSceneWebGL implements GameScene {
 	canvas: HTMLCanvasElement
 	displayWidth: number
 	displayHeight: number
@@ -53,7 +53,7 @@ class SceneWebGL implements Scene {
 	assets: Assets
 	materials: Materials
 
-	constructor (canvas: HTMLCanvasElement, assets: Assets, opts: SceneOptions = {}) {
+	constructor (canvas: HTMLCanvasElement, assets: Assets, opts: GameSceneOptions = {}) {
 		this.canvas = canvas
 		this.assets = assets
 		this.assets.geometries.monkey.rotateX(Math.PI * 0.5)

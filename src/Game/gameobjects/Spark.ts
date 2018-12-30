@@ -1,32 +1,29 @@
 import * as THREE from 'three'
-import GameObject from '../GameObject'
+import GameObject, {GameObjectInfo} from '../GameObject'
+
+export interface SparkInfo extends GameObjectInfo {
+	duration: number
+}
 
 export default class Spark extends GameObject {
-	lifeSpan: number
+	duration: number
 
-	constructor (
-		visual: THREE.Object3D, pos: THREE.Vector3, rot?: THREE.Euler,
-		lifeSpan = 500
-	) {
-		super(visual, pos, rot)
-		this.lifeSpan = lifeSpan
+	constructor (info: SparkInfo) {
+		super(info)
+		this.duration = info.duration != null ? info.duration : 500
 	}
 
 	update (dt: number) {
 		if (!super.update(dt)) return false
-		if (this.lifeT >= this.lifeSpan) {
-			this.snuff()
-			return false
-		}
 		return true
 	}
 
 	render() {
 		super.render()
 		const vis = this.visual as THREE.Mesh
-		const s = 1.0 + 3.0 * this.lifeT / this.lifeSpan
+		const s = 1.0 + 3.0 * this.lifeT / this.duration
 		vis.scale.set(s, s, s)
 		const mat = vis.material as THREE.MeshBasicMaterial
-		mat.opacity = 0.75 - 0.75 * this.lifeT / this.lifeSpan
+		mat.opacity = 0.75 - 0.75 * this.lifeT / this.duration
 	}
 }

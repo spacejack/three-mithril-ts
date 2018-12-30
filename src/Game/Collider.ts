@@ -11,7 +11,7 @@ export default class Collider {
 	type: ColliderType
 	size: THREE.Vector3
 
-	constructor (type: ColliderType, xs: number, ys?: number, zs?: number) {
+	protected constructor (type: ColliderType, xs: number, ys?: number, zs?: number) {
 		this.type = type
 		this.size = new THREE.Vector3(
 			xs,
@@ -36,6 +36,10 @@ export default class Collider {
 		return a.type === Collider.SPHERE
 			? distToAABB(ap, bp, b.size) < a.size.x  // sphere vs aabb
 			: distToAABB(bp, ap, a.size) < b.size.x  // aabb vs sphere
+	}
+
+	static create (type: ColliderType, xs: number, ys?: number, zs?: number) {
+		return new Collider(type, xs, ys, zs)
 	}
 }
 

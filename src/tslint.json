@@ -15,6 +15,7 @@
     "interface-name": false,
     "indent": [true, "tabs"],
     "jsdoc-format": false,
+    "max-classes-per-file": false,
     "max-func-body-length": false,
     "max-line-length": false,
     "member-access": false,
