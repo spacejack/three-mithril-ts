@@ -1,4 +1,4 @@
-import stream, {Stream} from 'mithril/stream'
+import Stream from 'mithril/stream'
 import * as THREE from 'three'
 import * as config from './config'
 import {Assets} from '../lib/loader'
@@ -39,9 +39,9 @@ interface Game {
  */
 function Game (canvas: HTMLCanvasElement, assets: Assets): Game {
 	const scene = GameScene(canvas, assets, {antialias: true})
-	const score = stream(0)
-	const time = stream(0)
-	const level = stream(0)
+	const score = Stream(0)
+	const time = Stream(0)
+	const level = Stream(0)
 	let prevT = 0
 	let running = false
 

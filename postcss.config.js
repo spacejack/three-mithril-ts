@@ -6,7 +6,6 @@ module.exports = ctx => ({
 		'postcss-custom-properties': {},
 		'postcss-nesting': {},
 		'autoprefixer': {
-			browsers: ['last 2 versions', 'ie >= 10', 'iOS >= 8'],
 			grid: true
 		},
 		// Minify prod builds

@@ -70,12 +70,17 @@ class GameSceneWebGL implements GameScene {
 
 		// Make transparent so it isn't rendered as black for 1 frame at startup
 		this.renderer = new THREE.WebGLRenderer({
-			canvas, antialias: !!opts.antialias,
-			clearColor: config.fogColor.getHex(), alpha: true, clearAlpha: 1
+			canvas,
+			antialias: !!opts.antialias,
+			//clearColor: config.fogColor.getHex(),
+			alpha: true,
+			//clearAlpha: 1
 		})
 		if (!this.renderer) {
 			throw new Error("Failed to create THREE.WebGLRenderer")
 		}
+		this.renderer.setClearColor(config.fogColor)
+		this.renderer.setClearAlpha(1)
 
 		const rc = canvas.getBoundingClientRect()
 		this.displayWidth = rc.width

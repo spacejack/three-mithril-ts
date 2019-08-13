@@ -1,5 +1,5 @@
 import m from 'mithril'
-import {Stream} from 'mithril/stream'
+import Stream from 'mithril/stream'
 import LoadingBar from '../LoadingBar'
 
 export interface Attrs {
