@@ -31,6 +31,7 @@
     "no-import-side-effect": false,
     "no-increment-decrement": false,
     "no-invalid-this": false,
+    "no-namespace": false,
     "no-object-literal-type-assertion": false,
     "no-parameter-reassignment": false,
     "no-reference": false,
