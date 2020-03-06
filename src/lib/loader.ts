@@ -119,8 +119,8 @@ function loadGeometry (url: string) {
 	return new Promise<THREE.BufferGeometry>((resolve, reject) => {
 		const loader = new THREE.BufferGeometryLoader()
 		loader.load(url, resolve, undefined,
-			(xhr: XMLHttpRequest) => {
-				reject(new Error(`Failed to load '${url}' (${xhr.status})`))
+			err => {
+				reject(new Error(`Failed to load '${url}' (${err.message})`))
 			}
 		)
 	})
