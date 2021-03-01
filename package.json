@@ -52,6 +52,6 @@
   "dependencies": {
     "mithril": "^2.0.4",
     "pojod": "^0.6.2",
-    "three": "^0.119.1"
+    "three": "^0.125.0"
   }
 }
